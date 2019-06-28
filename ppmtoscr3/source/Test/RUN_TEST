@@ -1,0 +1,10 @@
+ppmtoscr_OS3.exe PaiTest.ppm PaiTest.scr SAVEFORMAT SCR
+ppmtoscr_OS3.exe PaiTest.ppm PaiTest.tap SAVEFORMAT TAP
+
+Echo "*NComparing generated files to expected:"
+BinDif PaiTest.scr PaiTest.scr_Expected
+BinDif PaiTest.tap PaiTest.tap_Expected
+
+Echo "*NComparing generated files to what I get:"
+BinDif PaiTest.scr PaiTest.scr_Actual
+BinDif PaiTest.tap PaiTest.tap_Actual

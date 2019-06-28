@@ -1,0 +1,28 @@
+/* Load *any* Datatypes image into ZXAM as a SCR!   Needs PDHFIC 2.0 */
+/* (c) 1998 Chris Young and Unsatisfactory Software                  */
+
+OPTIONS RESULTS
+ADDRESS PDHFIC
+
+if ~show(ports,ZXAM_REXX) then do
+	ADDRESS COMMAND 'requestchoice >nil: "LoadDT.zxam" "ZXAM is not running!" "Oops."'
+	exit
+end
+
+if ~show(ports,'PDHFIC') then do
+	ADDRESS COMMAND 'requestchoice >nil: "LoadDT.zxam" "PDHFIC is not running!" "Oops."'
+	exit
+end
+
+SELECTSOURCE
+
+if rc>0 then exit
+
+QUICKCONVERT '"' || RESULT || '" "T:LoadDT.tmp"'
+
+scrfile=ZXAMppLoadFile('T:LoadDT.tmp')
+
+dummy = ZXAMPutMem(16384,scrfile)
+
+ADDRESS COMMAND 'delete >nil: T:LoadDT.tmp'
+

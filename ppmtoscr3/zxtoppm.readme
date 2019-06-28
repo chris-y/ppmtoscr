@@ -1,0 +1,32 @@
+This is a quick port of zxtoppm by Russell Marks.  I have distributed the
+source code along with an Amiga binary.  Please don't direct questions about
+this program to me, but to Russell at the address below.
+
+Usage:
+zxtoppm <scrfile >ppmfile
+
+eg. zxtoppm <ram:pic.scr >ram:pic.ppm
+
+
+zxtoppm		Filter to convert a 6912-byte speccy screen to a PPM.
+		You can extract screens from .sna files with `dd
+		if=input.sna of=output.scr bs=1 skip=27 count=6912'.
+
+Contacting me
+-------------
+
+You can email me at rus@forfree.at but since I'm not on the net, mail
+received there is just posted to me at regular intervals by a friend
+(and similarly I post responses back to be emailed). It could take as
+long as six weeks for you to get a response - if that's a problem,
+then you could write to me directly instead (more hassle, but usually
+quicker).
+
+You can write to me at:
+		Russell Marks,
+		3 Rapley Close,
+		Camberley,
+		Surrey,
+		GU15 4ER,
+		United Kingdom.
+

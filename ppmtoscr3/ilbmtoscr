@@ -1,0 +1,10 @@
+.key ILBMFILE/A,SCRFILE/A,SAVEFORMAT/A
+.bra {
+.ket }
+
+ilbmtoppm >T:ilbmtoscr.tmp {ILBMFILE}
+pnmscale >T:scaledppm.tmp -xsize 256 -ysize 192 T:ilbmtoscr.tmp
+ppmtoscr T:scaledppm.tmp {SCRFILE} SAVEFORMAT {SAVEFORMAT}
+
+delete >nil: T:ilbmtoscr.tmp T:scaledppm.tmp
+

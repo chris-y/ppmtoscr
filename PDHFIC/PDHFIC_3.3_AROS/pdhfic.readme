@@ -1,0 +1,71 @@
+Short:        Convert images from Datatypes to Spectrum SCR
+Uploader:     chris@unsatisfactorysoftware.co.uk (Chris Young)
+Author:       chris@unsatisfactorysoftware.co.uk (Chris Young), joe@nergles.cjb.net (Joe Mackay)
+Type:         gfx/conv
+Version:      3.3
+Architecture: i386-aros; ppc-aros
+
+PDHFIC 3.3
+----------
+
+Ever wanted to convert images from your Amiga over to a Spectrum (or even an
+emulator)?  This program lets you do just that.
+
+PDHFIC converts any format of Datatypes images or 256x192 PPM files
+into ZX Spectrum SCR, TAP, +3DOS and other formats.
+
+It will rescale Datatypes images, add dithering if requested, and can be run
+from CLI or Workbench.
+
+Example pictures can be found at http://www.unsatisfactorysoftware.co.uk/pdhfic/
+
+
+Changes from previous release
+-----------------------------
+
+
+Version 3.3 (11.10.2009)
+-----------
+
+* Fixed crash on exit
+* Fixed some potential string corruption (thanks to Matthias Rustler)
+* Compiled for AROS x86/PowerPC only
+
+
+Version 3.2 AROS BETA (04.10.2009)
+-----------
+
+* Minor changes for AROS compilation.  Very unstable.
+* ASL filter hook removed again.
+
+
+Version 3.2 (12.11.2008)
+-----------
+
+* Re-added ARexx and ASL filter hook.
+
+
+Version 3.1 (19.07.2008)
+-----------
+
+* OS4 NATIVE VERSION made possible by PortablE.  There is no 68k compile of this release.
+
+* Changed the Datatypes loading code to be 24-bit - this gives cleaner images as 24-bit images will no longer be dithered down to 256 colours.
+
+* extscale no longer required, scaling now being done by picture.datatype
+
+* Fixed the Use Screen menu item
+
+* Fixed errors that display when converting the clipboard contents.
+
+* Fixed a bug which caused a crash when the Display... menu items were picked.
+
+* Updated all email addresses etc.
+
+* Removed ARexx port (hopefully temporary, due to lack of ARexx module for PortablE)
+
+* Removed intelligent filtering (as yet unknown problem causing ASL to crash)
+
+* Minor problem still remaining: display of values on the Information requester are wrong.
+
+

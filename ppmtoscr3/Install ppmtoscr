@@ -1,0 +1,79 @@
+; $VER:PPMtoSCR version 3.4 Installation Script (01.08.99)
+
+(set osver (getversion))
+(set osver (/ osver 65536))
+
+(if (< osver 52)
+	(
+		(set #os "OS3")
+	)
+;else
+	(
+		(set #os "OS4")
+	)
+)
+
+(welcome)
+
+(set @default-dest
+  (askdir
+    (prompt "Please choose where you want to install ppmtoscr\n"
+    "A drawer will NOT be created there")
+    (help @askdir-help)
+    (default @default-dest)
+  )
+)
+
+  (copyfiles
+    (prompt "Copy ppmtoscr")
+    (help @copyfiles-help)
+    (source #os)
+    (choices "ppmtoscr" "zxtoppm")
+    (dest @default-dest)
+    (optional "fail" "force" "askuser")
+    (confirm)
+  )
+
+  (copyfiles
+    (prompt "Copy ilbmtoscr")
+    (help @copyfiles-help)
+    (source "ilbmtoscr")
+    (dest @default-dest)
+    (optional "fail" "force" "askuser")
+    (confirm)
+  )
+
+  (copyfiles
+    (prompt "Do you want to install the documentation for ppmtoscr?")
+    (help @copyfiles-help)
+    (source "")
+    (choices "ppmtoscr.guide" "zxtoppm.readme")
+    (dest @default-dest)
+    (confirm)
+    (infos)
+    (optional "fail" "force" "askuser")
+  )
+
+  (copyfiles
+    (prompt "Do you want to install the example pictures?")
+    (help @copyfiles-help)
+    (source "Examples")
+    (dest (tackon @default-dest "Examples"))
+    (confirm)
+    (infos)
+    (all)
+    (optional "fail" "force" "askuser")
+  )
+
+(startup "ppmtoscr"
+  (prompt "ppmtoscr is designed to be used with the NetPBM programs for image "
+  "conversion from other formats.  To use ppmtoscr in scripts, it really "
+  "needs to be in your command path.  In addition, this will make it easier "
+  "to execute it from the CLI.\n\n"
+  "To do this, the following command will be added to your user-startup;\n\n"
+  "PATH \"" @default-dest "\" ADD")
+  (help @startup-help)
+  (confirm)
+  (command "PATH \"" @default-dest "\" ADD")
+)
+

@@ -1,0 +1,35 @@
+; $VER: PDHFIC 3.1 (19.07.2008)
+
+(welcome)
+
+(set #largepartition @default-dest)
+
+(set #dest
+    (askdir
+        (prompt "Where do you want to install PDHFIC?\n"
+        "A drawer named 'PDHFIC' will be created there.")
+        (help @askdir-help)
+        (default @default-dest) ; defaults to largest partition
+    )
+)
+
+(set @default-dest (tackon #dest "PDHFIC"))
+
+(if (exists @default-dest (noreq))
+    (makedir @default-dest (infos))
+)
+
+(copyfiles
+    (prompt "Copying PDHFIC")
+    (help @copyfiles-help)
+    (source "")
+    (dest @default-dest)
+    (infos)
+    (optional "oknodelete" "force" "askuser")
+    (choices "PDHFIC" "PDHFIC.guide" "Examples")
+)
+
+(complete 100)
+
+(exit)
+

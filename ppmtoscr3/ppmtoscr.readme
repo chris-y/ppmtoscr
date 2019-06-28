@@ -1,0 +1,30 @@
+Short:        PPM -> Spectrum SCR/TAP/ZX82/bytes/TZX
+Uploader:     chris@unsatisfactorysoftware.co.uk (Chris Young)
+Author:       chris@unsatisfactorysoftware.co.uk (Chris Young)
+Type:         gfx/pbm
+Version:      3.5
+Replaces:     gfx/conv/ppmtoscr.lha
+Architecture: ppc-amigaos >= 4.0.0; m68k-amigaos >= 2.0.4
+
+ppmtoscr 3.5
+------------
+
+This program converts PPM files into Spectrum SCR, .bytes, .tap, TZX or ZX82
+files.  It supports colour and the BRIGHT and FLASH attributes.
+
+If you are not converting files to Spectrum formats with NetPBM in scripts,
+and you have OS3.x, then you will probably be more interested in PDHFIC...
+Available from Aminet gfx/conv/pdhfic.lha
+
+
+Changes from previous release
+-----------------------------
+
+* OS4 port! (thanks to Chris Handley's PortablE)
+
+* Fixed a bug where ppmtoscr would write to unallocated memory before it
+started conversion.
+
+
+Unsatisfactory Software
+http://www.unsatisfactorysoftware.co.uk

@@ -1,0 +1,2561 @@
+@database PDHFIC
+@author "Chris Young"
+@$VER: PDHFIC 3.3 (05.10.2009)
+@smartwrap
+
+@node Main "Welcome to PDHFIC..."
+@{b}PDHFIC 3.3@{ub} by Chris Young and Joe Mackay
+
+© 1998-2001,2008-2009 Unsatisfactory Software
+
+
+@{"*DISCLAIMER*" link disclaimer}
+
+
+@{"Introduction" link intro}  @{"Distribution" link distrib}  @{"Requirements" link require}  @{"Installation" link install}
+
+
+@{"Instructions" link usage} -> Including quick start!
+
+
+@{"Recommended Options" link recommended} and @{"Useless Things" link useless}
+
+
+@{"Technical Details" link technical} File formats, colour mapping, FLASH mode etc...
+
+
+@{"ARexx Port" link arexx}  @{"Example ARexx Scripts" link arexx-scripts}  @{"Example SCRs" link examples}
+
+
+Past:    @{"Program History" link history}
+
+Present: @{"Known Bugs     " link bugs}
+
+Future:  @{"Future Plans   " link future}
+
+
+@{"Thanks to..." link thanks}  @{"Contact Information" link contact}  @{"Competition Result" link compo}
+
+
+@{"Frequently Asked Questions" link faqs}
+
+@endnode
+
+@node disclaimer "DISCLAIMER"
+PDHFIC is provided "AS IS", without warranty of any kind either expressed
+or implied.  It has proven to be stable in everyday use, but even so you
+still use this program at YOUR OWN RISK.  I will not accept responsibility
+for loss of data, damage or anything else caused either directly or
+indirectly by PDHFIC.
+
+
+@{b}THE AROS VERSION OF PDHFIC IS BETA SOFTWARE AND WILL CRASH, PROBABLY
+LOSING ANY DATA THAT HASN'T BEEN SAVED IN THIS AND OTHER APPLICATIONS
+RUNNING ON THE COMPUTER.  BY USING PDHFIC AROS BETA YOU ARE AGREEING
+TO DO SO AT YOUR OWN RISK.@{ub}
+
+
+Modified copies of PDHFIC must not be distributed.  I have purposely not
+included the source code in this archive for that reason*.  Please don't ask
+for it unless you have a @{b}very@{ub} good reason (eg. if you think I've
+discontinued development, and want to take the project over or something).
+I have no problems if somebody wants to do a port of this, but be warned
+that;
+
+a) it isn't written in C
+
+b) it makes heavy use of Amiga ROM functions
+
+
+In fact, you would probably be better off trying to port ppmtoscr.  Although
+that isn't written in C, either.  I do have an old "half converted to C"
+version of it, but it doesn't create valid SCRs.  Er.. where was I?
+
+
+PDHFIC is @{b}not@{ub} in any way based on the source code for Blood's
+BMP2SPEC program.
+
+
+* The fact that the source is in a complete mess, with "comments" (ie. old
+bits of code) floating around and that even I have trouble understanding
+what's going on has got absolutely nothing to do with it.  Probably.
+
+
+Bad programmers, like good chefs, never reveal their sources (sauces).
+
+
+Sorry, I meant *good* programmers.  Tch, eh?
+
+@endnode
+
+@node technical "Technical Stuff - not for the faint-hearted"
+@{"Input File Formats" link formats-input} and @{"Output File Formats" link formats-output}
+
+
+@{"Standard Colour Mapping" link alg} and @{"ROMREMAP Mapping" link OS3}
+
+@{"Colour Ordered Dithering" link cod} and @{"SimpleMap" link simplemap}
+
+@{"FLASH Mode" link flash}
+
+@endnode
+
+@node intro "Introduction to PDHFIC"
+OK.  You're probably all wondering what PDHFIC actually does.  In fact,
+half of you are probably wondering what PDHFIC stands for.  In which case
+I'm going to disappoint you and say nothing.
+
+
+PDHFIC converts Datatypes images to the Spectrum formats: SCR, TAP, TZX, ZX82, +3DOS and
+.header/.bytes.  It can scale or truncate images so they are the correct
+size.
+
+
+But why did I create this?  What about PPMtoSCR?  Didn't I port BMP2SPEC
+over to the Amiga?
+
+
+Basically, I had been wanting to create Spectrum format images for quite
+some time, when I heard about BMP2SPEC.  Feeling interested (and
+accidentally stumbling across it while browsing through the World of
+Spectrum archive), I discovered that the source code was included.  Not one
+to refuse a challenge* I attempted a re-compilation of it.  Almost suffering
+from a major heart failure when it compiled first time with no
+modifications, and tearing my hair out wondering why it worked perfectly
+well one minute and crashed the next, I got through at least two different
+compilers and a hot (or, at least, it was when I started) mug of strong
+coffee before working out what the problem was.
+
+
+Needless to say, I decided that BMP2SPEC was a bit limited (not least
+because it required BMP files of exactly the right size for input) and
+lacking in features.  So I wrote a little NetPBM extension called PPMtoSCR.
+
+
+Expanded over several years (well, months), the program had built-in
+routines to call other NetPBM programs and a "sort of" GUI.  It really was
+getting a bit far away from its filename.
+
+
+So, when Joe Mackay (Hi Joe!) offered to send me the Datatypes code he was
+going to write for a DT2SCR type program, I saw the opportunity to change
+the program beyond recognition.  And split it up into two parts in a
+confusing way, which I would never be able to explain in the docs.  In fact,
+I appear to have confused at least a couple of people already.
+
+
+So, I added a GUI.  Realising that real men use GadTools** (MUI is for wimps
+or, more accurately, WIMPs), that was exactly what I used.
+
+
+PPMtoSCR still exists, but in a cut-down form - PDHFIC is more of a
+successor to PPMtoSCR than the new ppmtoscr 3.0 is.  In effect, PDHFIC is
+@{u}the@{uu} image convertor, and ppmtoscr is a small CLI-only program which will
+interface with NetPBM quite nicely (well, that was the whole point).
+
+
+Features of PDHFIC;
+
+
+Too many to list...
+
+
+
+* The challenge being whether I, with (at that time) hardly any knowledge of
+C whatsoever, could convert a program written in C.  Ahem.
+
+
+** Actually, real men probably don't bother with programming and decide to
+take up fighting or something instead.
+
+@endnode
+
+@node distrib "Distribution"
+You can distribute this as much as you like, but please note the following
+permissions and restrictions;
+
+
+You @{b}must@{ub} distribute this documentation with PDHFIC. Everything
+else included in the archive does @{b}not@{ub} need to be kept with the main
+program.
+
+
+Aminet, NVG and World of Spectrum are perfectly entitled to distribute
+PDHFIC through FTP.  Everyone else is allowed to do that as well,
+providing the file is accessible by *everybody* at *no cost* (ie. Anonymous
+FTP).
+
+
+You can put it on a disk and distribute it like that if you want to,
+but PDHFIC is so small that it should really be included with a few
+other programs.  Again: No charge, except for the price of the disk!
+
+
+Distribution on CD-ROM is perfectly OK.  If you are @{b}not@{ub} mentioned
+below and are thinking of distributing PDHFIC on a CD made for profit,
+then you @{b}must@{ub} ask me first.  I would appreciate a copy of the CD
+in question, as if you are making money out of my program, then I believe I
+should also get something out of it.  If you don't agree with this, then
+don't put it in a compilation.
+
+
+The following people have my permission to include PDHFIC on their CDs.
+They are not required to notify me or give me anything, although gifts won't
+be refused :-)
+
+
+1. Aminet
+
+2. Magazines (cover CDs/disks @{i}only@{ui} - not special subscriber disks)
+
+3. Gerard Sweeney
+
+@endnode
+
+@node require "Requirements"
+PDHFIC uses several features of OS3.0, so you will need an Amiga running
+at least Workbench 3.0
+
+
+Optionally required is;
+
+
+als.library [ftp://sunsite.doc.ic.ac.uk/aminet/util/libs/als_lib.lha]
+
+For @{"boredom relief" link menu-boredom}
+
+
+SCR2GIF [ftp://ftp.void.jump.org/pub/sinclair/tools/amiga/scr2gif.lha]
+
+To @{"create GIFs" link formats-output}
+
+
+Also recommended is the ZX Datatype, available on Aminet.  Especially if you
+want to convert SCRs back to SCRs just to see how well PDHFIC works...
+
+@endnode
+
+@node install "Installation"
+You've got "Installer", right?  Well, simply double-click on Install.
+
+@endnode
+
+@node usage "Usage Instructions"
+I have divided this section of the guide up into several parts;
+
+
+@{"Quick start (GUI usage)      " link usage-quick}
+
+@{"Gadgets and Menus            " link usage-gui}
+
+@{"Command line arguments       " link usage-cli}
+
+@{"Workbench tooltypes          " link usage-wb}
+
+@endnode
+
+@node usage-quick "Quick Start"
+To convert pic.iff to pic.scr, do the following;
+
+
+1. Load PDHFIC - the GUI will appear.
+
+
+2. Click on "Select" next to "Input", and choose pic.iff from the requester
+
+If @{"Automatic Naming" link menu-autoname} is on, then the output file will
+automatically set to pic.scr in the same directory.
+
+
+3. Select the desired output format from the "Save as" cycle gadget.  For
+testing purposes (and if you have the ZX Datatype), I recommend using either
+SCR or ZX82.
+
+
+4. Click on "Convert!".  The conversion will be performed.  Try loading the
+resulting file into Multiview or a Spectrum emulator and admire the results.
+
+@endnode
+
+@node usage-gui "The Graphical User Interface (GUI)"
+If you run PDHFIC from Workbench, then it will open a window looking
+absolutely nothing like the following;
+
+(don't you just hate it when people draw crap ascii representations of their program's GUI?)
+
+
+@{bg shine}@{"Project" link menu-project}_@{"Picture" link menu-picture}_@{"Settings" link menu-settings}_@{"Help" link menu-help}_______________________________@{bg back}[]
+
+@{fg shine}__________________________________@{fg text}
+
+@{bg fill}@{"[]" link menu-quit}__________________________@{"[]" link intui-zoom}@{"[]" link intui-back}@{bg back}
+
+@{fg fill}|@{fg text}                                @{fg fill}|@{fg text}
+
+@{fg fill}|@{fg text}  Input: _______________ @{"Select" link gui-inputselect} @{fg fill}|@{fg text}
+
+@{fg fill}|@{fg text} Output: _______________ @{"Select" link gui-outputselect} @{fg fill}|@{fg text}
+
+@{fg fill}|@{fg text}                                @{fg fill}|@{fg text}
+
+@{fg fill}|@{fg text}    Smooth @{"  " link gui-smooth}     Scale Pic @{"  " link gui-scalepic} @{fg fill}|@{fg text}
+
+@{fg fill}|@{fg text}                                @{fg fill}|@{fg text}
+
+@{fg fill}|@{fg text} ROM Remap @{"  " link gui-romremap}        Dither @{"  " link cod} @{fg fill}|@{fg text}
+
+@{fg fill}|@{fg text}                                @{fg fill}|@{fg text}
+
+@{fg fill}|@{fg text} Save as @{" | SCR" link gui-saveas}  @{"  Convert!  " link gui-convert}  @{fg fill}|@{fg text}
+
+@{fg fill}----------------------------------@{fg text}
+
+
+(possibly followed by the @{"advanced options" link menu-advopts})
+
+@endnode
+
+@node menu-project
+@{b}Project@{ub}
+
+@{"About..." link menu-about}
+
+@{"--------"   link menu-sep}
+
+@{"Quit    "  link menu-quit}
+
+@endnode
+
+@node menu-picture
+@{b}Picture@{ub}
+
+@{"Select Source...   " link gui-inputselect}
+
+@{"From Clipboard     "  link menu-clipboard}
+
+@{"Display...         "    link menu-display}
+
+@{"-------------------"        link menu-sep}
+
+@{"Select Dest...     " link gui-outputselect}
+
+@{"Display...         " link menu-display}
+
+@{"-------------------" link menu-sep}
+
+@{"Information...     " link menu-info}
+
+@endnode
+
+@node menu-settings
+@{b}Settings@{ub}
+
+@{"  Advanced Options       " link menu-advopts} 
+
+@{"  Use Screen             "  link menu-screen}
+
+@{"  Warn Overwrite         " link menu-warnover}
+
+@{"  Intelligent Filtering  " link menu-intellifilter}
+
+@{"  Automatic Naming       " link menu-autoname}
+
+@{"  Progress Window        " link menu-progresswin}
+
+@{"-------------------------" link menu-sep}
+
+@{"Map Extra Colours To    »" link submenu-mapcols}
+
+@{"  Attributes             " link menu-saveattr}
+
+@{"  ZXDT Palette           " link gui-zxdtpal}
+
+@{"Dithering Method        »" link dithermethod}
+
+@{"  Dither SimpleMap       " link simplemap}
+
+@{"  Remap After Dither     " link rad}
+
+@{"-------------------------" link menu-sep}
+
+@{"TZX Blocks              »" link submenu-tzxblocks}
+
+@{"TZX Custom Block Border »" link menu-tzxcustomborder}
+
+@{"  Write .header          " link menu-writeheader}
+
+@{"-------------------------" link menu-sep}
+
+@{"  Snapshot window        " link menu-snapwin}
+
+@{"Save Config              " link menu-saveconfig}
+
+@endnode
+
+@node menu-saveattr
+When checked, PDHFIC will save all colour attributes with the file.  If this is not checked, PDHFIC will write attributes as black INK and white PAPER (for SCR/GIF output), or no attributes at all (all other formats).
+
+
+Default set by: NOATTRIBUTES
+
+@endnode
+
+@node menu-snapwin
+If this option is checked, the current window position will be saved along with the configuration (ie. check this, then select @{"save config" link menu-saveconfig} to snapshot the window, uncheck it then select @{"save config" link menu-saveconfig} to unsnapshot it.)
+
+
+Default set by: WINX and WINY
+
+@endnode
+
+
+@node menu-autoname
+This toggles whether PDHFIC should automatically name the output file as
+follows;
+
+
+If there is no output file selected, it will set it to the source
+directory and filename, but with an appropriate extension.
+
+
+If there is already an output file selected, the directory will not be
+changed, but the filename will be set to the source filename and appropriate
+extension.
+
+
+When changing the output filetype, the output filename's extension will be
+changed automatically (or added if one does not already exist)
+
+
+Default set by tooltype NOAUTONAMING
+
+@endnode
+
+@node submenu-mapcols
+@{b}Map Odd Colours To@{ub}
+
+@{"  Auto " link menu-mapcols-auto}
+@{"  Ink  " link menu-mapcols-ink}
+@{"  Paper" link menu-mapcols-paper}
+
+@endnode
+
+@node menu-mapcols-auto
+Currently unavailable - use the smooth checkbox for now.
+
+This option will toggle smooth mode, when I work out exactly how to implement
+it (I want to MX it with the ink/paper, but don't actually want to lose the
+current ink/paper setting.  That's why I've disabled this for now...)
+
+@endnode
+
+@node menu-mapcols-ink
+This will tell PDHFIC to map all extra colours in each block to the INK
+colour.
+
+
+Default set by tooltype ODDCOLOURS=INK
+
+@endnode
+
+@node menu-mapcols-paper
+This will tell PDHFIC to map all extra colours in each block to the PAPER
+colour.  This may cause "disappearing pixel syndrome"...
+
+
+Default set by tooltype ODDCOLOURS=PAPER
+
+@endnode
+
+@node menu-tzxcustomborder
+Allows you to set the colour of the border in TZX custom SCREEN$ blocks
+
+Default set by tooltype BORDER
+
+@endnode
+
+
+@node menu-intellifilter
+This toggles whether to apply "intelligent" filtering to the input file
+requester.  This will only show valid pictures, however it does slow down
+the reading of large directories.  If the input file requester hangs your
+system, try disabling this option.
+
+
+Default set by tooltype NOFILTER
+
+@endnode
+
+@node menu-progresswin
+This toggles whether the progress window should open.
+
+
+Default set by tooltype NOPROGRESSBAR
+
+@endnode
+
+@node submenu-tzxblocks
+@{b}TZX Blocks@{ub}
+
+@{"  Archive Info" link tzx-archiveinfo}
+
+@{"--------------" link menu-sep}
+
+@{"  Standard    " link tzx-standard}
+
+@{"  Custom      " link tzx-custom}
+
+
+Defaults set by tooltype TZXBLOCKS
+
+@endnode
+
+@node menu-warnover
+This will set whether PDHFIC should bring up a requester if you have
+selected an existing file to write over.
+
+
+Default set by tooltype WARNOVERWRITE
+
+@endnode
+
+@node menu-writeheader
+This sets whether PDHFIC should create a corresponding .header file when
+saving in .bytes format.
+
+
+Default set by tooltype NOHEADER
+
+@endnode
+
+@node tzx-archiveinfo
+This will set whether or not to write an "Archive Info" block to TZX files. 
+The archive info will contain the author, copyright and annotation fields
+from the original file.
+
+@endnode
+
+@node tzx-standard
+This is a toggle switch which will set PDHFIC to writing "Standard" (ie.
+Spectrum normal speed) blocks.
+
+@endnode
+
+@node tzx-custom
+This is a toggle item which will set PDHFIC to writing a standard custom
+block of type 'Spectrum Screen'.
+
+
+I know of no programs @{b}at all@{ub} which can display these, so perhaps
+the author of ZX Datatype might like to implement it...?
+
+@endnode
+
+@node menu-help
+@{b}Help@{ub}
+
+@{"Selected Output Format..." link menu-output}
+
+@{"Relieving Boredom...     " link menu-boredom}
+
+@endnode
+
+@node intui-zoom
+This will shrink PDHFIC down (or up, rather) to its titlebar.
+
+@endnode
+
+@node intui-back
+This is ridiculous.  You do actually have an Amiga, don't you?
+
+@endnode
+
+@node gui-inputselect
+Clicking on this will bring up a standard file requester allowing you to
+choose the source image.  Please note that this requester will only display
+valid images - if it takes a long time to read directories and/or displays
+files which aren't pictures, then you may have a datatype (or two) which has
+trouble identifying pictures.  This is @{b}not@{ub} a bug in PDHFIC.  Nor is
+it a bug in the datatypes, the problem is that some filetypes are @{b}very@{ub}
+difficult to identify.
+
+
+The main culprits are:
+
+MacSND (takes a long time to identify files - it seems to have to read
+almost all the file)
+
+MacPaint (often identifies files as pictures, when they aren't)
+
+
+If the file selected is not a valid Datatypes
+image, a requester will appear to warn you.
+
+
+Also note that PDHFIC's window is an AppWindow, so you can just drop icons
+onto it rather than going through all the file requesters.
+
+@endnode
+
+@node gui-outputselect
+This allows you to set the output filename.  The file extension defaults to
+whatever you have selected as the output format.
+
+
+WARNING: PDHFIC does @{b}not@{ub} check to see if the output file already
+exists, and will overwrite it if it does.
+
+Note that when saving .bytes
+files, a corresponding .header file will also be created, and overwrite any
+existing file of the same name.
+
+Note that when saving +3DOS files, PDHFIC does not add any extension so it is
+easy to overwrite the original - don't do it!
+
+@endnode
+
+@node gui-romremap
+Use OS3's built-in colour remapping functions.  See @{"OS3 Mapping" link OS3}
+
+
+Default set by tooltype ROMREMAP
+
+@endnode
+
+@node gui-zxdtpal
+In ROM Remap mode, this sets whether PDHFIC should use a palette identical to ZX Datatype's or
+a different one.  See @{"OS3 Mapping" link OS3}
+
+
+Default set by tooltype ALTPALETTE
+
+@endnode
+
+@node gui-scalepic
+This sets whether to scale the picture or truncate it.
+
+
+Default set by tooltype NOSCALE
+
+@endnode
+
+@node gui-smooth
+If switched on, odd pixels will be mapped to the nearest colour (INK or
+PAPER), when off, odd pixels will all be mapped to INK.
+
+
+Default set by tooltype NOSMOOTH
+
+@endnode
+
+@node gui-saveas
+The cycle gadget sets the @{"output format" link formats-output}
+
+
+Default set by tooltype SAVEFORMAT=SCR|TAP|ZX82|BYTES|TZX
+
+@endnode
+
+@node gui-convert
+Actually carries out the conversion.  Hurrah!
+
+@endnode
+
+@node menu-about
+Displays an about requester.  As you would expect, really.
+
+@endnode
+
+@node menu-sep
+This does nothing, as it's just a separator.  Twit.
+
+@endnode
+
+@node menu-quit
+Er...
+
+@endnode
+
+@node menu-info
+Shows information about the currently selected source image.  It usually
+just shows the complete path and filename and the filetype, but after
+conversion will tell you whether the picture was scaled or truncated.
+
+@endnode
+
+@node menu-output
+Shows some information about the currently selected @{"output format" link formats-output}
+
+@endnode
+
+@node menu-advopts
+Shows/hides the Advanced Options panel, featuring sliders for the following colour
+mapping options.
+
+
+The first three options are opposite to what you might expect, but sort of
+work like the controls on the telly.  The last three work (sort of) a bit
+like the tint setting on really old TVs.
+
+Please note: These do @{b}not@{ub} affect the @{"ROM remapping" link OS3}.
+
+
+
+@{b}Bright:@{ub}    More BRIGHT <-----------------> Less BRIGHT blocks
+
+
+@{b}Colour:@{ub}    More colour <-----------------> Less colour (greyscale)
+
+
+@{b}White:@{ub}   More contrast <-----------------> Less contrast (less white)
+
+
+@{b}Red/Yel:@{ub}      More red <-----------------> More yellow
+
+
+@{b}Blu/Cyn:@{ub}     More blue <-----------------> More cyan
+
+
+@{b}Grn/Mag:@{ub}    More green <-----------------> More magenta
+
+
+Please see @{"tooltypes" link usage-wb} and @{"colour mapping" link alg} for
+fuller details.
+
+
+There is also a panel to select the FLASH colour.  If any component is set
+to -1, then FLASH will be switched off.  See @{"FLASH mode" link flash} for
+more information.
+
+
+Defaults set by tooltypes: ADVANCED,FLASHRED,FLASHGRN,FLASHBLU,
+BRIGHTSENSE,COLOURSENSE,WHITESENSE,REDYELLOW,BLUECYAN,GREENMAGENTA
+
+@endnode
+
+@node menu-boredom
+Offers help on relieving boredom ;-)
+
+
+If this is ghosted, then you should get the archive util/libs/als_lib.lha
+from Aminet.
+
+@endnode
+
+@node menu-clipboard
+This will cause PDHFIC to read an image from the clipboard, rather than from
+a file on disk.  The clipboard unit number can be set with the CLIPUNIT
+@{"tooltype" link usage-wb}
+
+@endnode
+
+@node menu-display
+Launchs MultiView* to display the source or destination pictures, if they
+exist.
+
+
+* I think it's pretty safe to assume all WB3 users have MultiView, isn't it?
+
+@endnode
+
+@node menu-saveconfig
+Saves the current configuration into PDHFIC's @{"tooltypes" link usage-wb}
+
+@endnode
+
+@node menu-screen
+Sets whether or not MultiView should display pictures on a separate screen.
+
+Default set by tooltype: SCREEN
+
+@endnode
+
+@node usage-cli "Command Line Arguments"
+Shell Template:
+
+
+DTFILE/A,SCRFILE,FORM=SAVEFORMAT/K,COL=COLOURSENSE/K/N,
+BRT=BRIGHTSENSE/K/N,WHT=WHITESENSE/K/N,GRNMAG=GREENMAGENTA/K/N,
+BLUCYN=BLUECYAN/K/N,REDYEL=REDYELLOW/K/N,RED=FLASHRED/K/N,
+GRN=FLASHGREEN/K/N,BLU=FLASHBLUE/K/N,NOSCALE/S,GREYSCALE/S,NOBRIGHT/S,
+NOSMOOTH/S,OS=ROMREMAP/S,ALTPAL=ALTROMPALETTE/S,NOHEADER/S,
+NOATTR=NOATTRIBUTES/S,COD=DITHER/S,METHOD=DITHERTYPE/K,CLIPBOARD/S,NOCFG=NOCONFIGFILE/S,QUIET/S
+
+
+DTFILE:*    This is your source image file
+
+
+SCRFILE:    This is the path and filename of the resulting file.  If not
+set, it will use @{"auto-naming" link menu-autoname} to determine the output
+filename.
+
+
+SAVEFORMAT: Specifies the output format.  See @{"output formats" link formats-output}
+
+
+COL=COLOURSENSE/K/N,BRT=BRIGHTSENSE/K/N,WHT=WHITESENSE/K/N,
+GRNMAG=GREENMAGENTA/K/N,BLUCYN=BLUECYAN/K/N,REDYEL=REDYELLOW/K/N
+
+
+Colour mapping options.  See @{"colour mapping" link alg} and @{"tooltypes" link usage-wb}
+
+
+RED=FLASHRED/K/N,GRN=FLASHGREEN/K/N,BLU=FLASHBLUE/K/N
+
+
+Set when to use the FLASH attribute.  See @{"FLASH mode" link flash}
+
+
+NOSCALE:   This will stop PDHFIC scaling your source image.
+
+
+GREYSCALE: This stops PDHFIC from outputting colour images
+
+
+NOBRIGHT:  This prevents PDHFIC from using the BRIGHT attribute
+
+
+NOSMOOTH:  Turns off the @{"smooth mode" link alg}
+
+
+ROMREMAP:  Sets PDHFIC to use OS3's ROM routines to do the colour mapping.
+
+           See @{"OS3 Mapping" link OS3}
+
+
+ALTPAL:    Alternative palette to map to in ROMREMAP mode.  The default
+
+           palette is the ZX Datatype one.
+
+
+NOATTR:    Stops PDHFIC from writing colour attributes.  See @{"attributes menu item" link menu-saveattr}
+
+
+NOHEADER:  Stops PDHFIC from writing .header files when saving .bytes
+
+
+CLIPBOARD: Sets PDHFIC to read from the clipboard instead of a file.  If you
+
+           specify this option, then DTFILE will specify the clipboard unit
+
+           number.
+
+
+DITHER:    Specifies that PDHFIC should use @{"colour ordered dithering" link COD}
+
+
+METHOD:    Changes the dithering method.  Possible keyword is "RANDOM", anything else
+will result in ordered dithering.
+
+
+NOCFG:     Not yet implemented.
+
+           Will specify that PDHFIC should not read the default config file.
+
+
+QUIET:     PDHFIC will not display any output except "conversion failed".
+
+           To find out why, you may have to run the same conversion again
+
+           with QUIET switched off.
+
+
+* Required options
+
+
+Examples;
+
+
+PDHFIC ram:pic.png
+
+
+will convert the ram:pic.png to an SCR called ram:pic.scr
+
+
+PDHFIC ram:pic.iff ram:specpic SAVEFORMAT ZX82 NOSCALE
+
+
+will convert ram:pic.iff to a ZX82 file named specpic, and will NOT scale
+the source image down to the correct size.
+
+
+PDHFIC 0 ram:clipboard.scr CLIPBOARD
+
+
+will convert the picture stored in clipboard unit 0 to a SCR called
+ram:clipboard.scr
+
+
+PDHFIC 2 CLIPBOARD
+
+
+will.. er... probably create a file "2.scr" in the current directory, from
+the contents of clipboard unit 2.  It might not though.
+
+@endnode
+
+@node usage-wb "Tooltypes"
+Available Tooltypes:
+Note that the tooltypes do @{b}not@{ub} exactly correspond with the CLI
+arguments.
+
+
+COLOURSENSE= <value> [default = 20]
+
+BRIGHTSENSE= <value> [default = 450]
+
+WHITESENSE = <value> [default = 200]
+
+
+These set the colour levels at which point PDHFIC detects colour, white
+from black and the BRIGHT attribute.  Please note that setting any of these
+to 0 will put them to the default.  See @{"colour mapping" link alg} for
+information on how to use these.
+
+
+GREENMAGENTA= <value> [default = 0]
+
+BLUECYAN    = <value> [default = 20]
+
+REDYELLOW   = <value> [default = 40]
+
+
+These set the detection of magenta over green, cyan over blue and yellow
+over red.  The higher the number, the more likely the primary colour is to
+appear.  Use these if you get reds appearing when yellows should (for
+example)
+
+
+FLASHRED=<value>
+
+FLASHGRN=<value>
+
+FLASHBLU=<value>
+
+
+These set when to use the FLASH attribute.  See @{"FLASH mode" link flash}.
+
+
+NOSCALE
+
+
+This turns off the "dynamic re-scaling" feature of PDHFIC.
+
+
+NOBRIGHT
+
+
+Turns off the BRIGHT attribute matching (same as BRIGHTSENSE=5000).  Please
+note that if both BRIGHTSENSE and NOBRIGHT are specified, BRIGHTSENSE will
+do nothing.
+
+
+GREYSCALE
+
+
+This stops PDHFIC from mapping colours (same as COLOURSENSE=5000).  Please
+note that if both GREYSCALE and COLOURSENSE are specified, then COLOURSENSE
+will do nothing.
+
+
+NOSMOOTH
+
+
+This turns off the smoothing feature of PDHFIC.  See @{"colour mapping" link alg}
+
+
+ROMREMAP
+
+
+PDHFIC will use OS3's built-in colour mapping routines instead of the custom
+ones.  See @{"OS3 Mapping" link OS3}
+
+
+ALTPALETTE
+
+
+Sets ROMREMAP mode to use an alternative palette when mapping.  The default
+palette is identical to ZX Datatype's one.
+
+
+SAVEFORMAT = SCR | TAP | ZX82 | BYTES | TZX | GIF | PLUS3
+
+
+Sets the default format to show on the GUI.
+
+
+ADVANCED
+
+
+Enables the @{"advanced options" link menu-advopts} panel at startup.
+
+
+SCREEN
+
+
+If specified, MultiView will be run on its own screen.
+
+
+CLIPUNIT = <0-255>
+
+
+Specifies the Clipboard unit number to use.  Default is the primary unit (0)
+
+
+WARNOVERWRITE
+
+
+If set, PDHFIC will warn you if you have selected an existing file fot
+writing.
+
+
+TZXBLOCKS = INFO | STANDARD | CUSTOM
+
+
+This sets which blocks should be written in TZX mode.
+
+INFO: Write an @{"archive info" link tzx-archiveinfo} block
+
+STANDARD: Write a @{"standard loading block" link tzx-standard}
+
+CUSTOM: Write a standard @{"custom block" link tzx-custom}
+
+Note that only one of STANDARD or CUSTOM can be specified.
+
+
+NOHEADER
+
+This will stop the .bytes saver from creating corresponding .header files.
+
+
+NOPROGRESSBAR
+
+This stops the progress bar window from opening.
+
+
+NOFILTER
+
+This will turn off the input file requester's intelligent filtering.  Use
+this option if the input file requester does not work.
+
+
+ODDCOLOURS = INK | PAPER
+
+Select whether any "unmapped" pixels should be INK or PAPER
+
+
+NOAUTONAMING
+
+Will stop PDHFIC's @{"auto-naming" link menu-autoname} feature.
+
+
+NOATTRIBUTES
+
+Will disable writing of @{"attributes" link menu-saveattr}
+
+
+DITHER
+
+Enables @{"dithering" link cod} option
+
+
+DITHERTYPE = RANDOM | ORDERED
+
+Changes @{"dithering method" link dithermethod}
+
+
+SIMPLEMAP
+
+Uses @{"simple mapping" link simplemap} routine for dithering.
+
+
+WINX = <value>
+
+WINY = <value>
+
+
+These will set where PDHFIC's window appears on-screen.  Use the @{"snapshot window" link menu-snapwin} to set these easily.
+
+ASLX = <value>
+
+ASLY = <value>
+
+
+These will set the size of the ASL file requester, in pixels.
+
+@endnode
+
+@node formats-input "The Input File Formats"
+@{b}Datatypes@{ub}
+
+As you probably already know, this is a feature of Workbench 3.0+ allowing
+applications to read (potentially) any filetype.  PDHFIC can read pictures
+through the Datatypes system.
+
+
+@{b}PPM@{ub}
+
+This is a Portable Pixel Map (or, more correctly, a "portable pixmap"). 
+PDHFIC supports "P6" type files, which are binary/rawbits PPMs.  They *must*
+be in the correct size (256x192).
+
+
+Please note that if you have a PPM datatype, this will be used in preference
+(and then you don't need to ensure your pictures are the right size).  The
+disadvantage is that loading through datatypes will be slower.
+
+@endnode
+
+@node formats-output "The Output File Formats"
+@{b}SCR@{ub} (Raw SCREEN$)
+
+SCR is basically no more than a simple file dump of the Spectrum's screen
+memory: starting at byte 16384 and lasting for 6912 bytes.  The actual
+format of a Spectrum screen is difficult to explain, but if you've ever
+watched a Speccy load a screen from tape then you already know the format
+anyway.  If you haven't, then just try it.  It's certainly a lot easier than
+me attempting to explain it to you.
+
+
+If you want to view SCR files, then the best thing to try is the ZX
+Datatype.
+
+
+@{b}TAP@{ub} (Z80 Tape Image)
+
+This is a tape image format used by the emulator Z80 on the PC.
+
+
+ZXAM can read these (through an ARexx script), ASp and CBSpeccy can also read them.
+
+
+@{b}TZX@{ub} (ZX Tape)
+
+This is a "digital tape" format, which can store turbo loading blocks as
+well as a lot of other information.
+
+
+There is also a custom block defined in the ZX Tape format, which is specially
+for Spectrum screen files.  I have no idea what can read these (if
+anything), but you can write in this format anyway by toggling the "TZX
+Blocks » Custom" menu item.
+
+
+The TZX output is entirely based on the v1.12 documentation - I have NOT
+been able to test this much, if you can then please let me know whether it
+works or not!
+
+
+CBSpeccy can read this format.
+
+
+@{b}BYTES@{ub} (.header/.bytes)
+
+This is the Amiga's standard format for tape files on disk.
+
+
+ZXAM and Peter McGavin's Spectrum can read these.
+
+
+@{b}ZX82@{ub}
+
+This is another standard format on the Amiga, which does not quite conform
+to how a Spectrum would save data (on tape): ie. it has a special header, and the
+filename comes from the actual name of the file.  There is also no checksum.
+PDHFIC can currently only save the non-compressed files.
+
+
+Speculator, ZXmit and the ZX Datatype can read this format.  There are some
+other programs which also use it, and details can be found in the Speculator
+documentation.
+
+
+
+To read headered SCR files into an emulator, simply set it to the
+appropriate load mode and type LOAD "" CODE [then press return]
+This can be achieved in 48K BASIC by pressing the keys;
+[J] [Symbol Shift and P] [Symbol Shift and P] [Symbol Shift and Caps Shift]
+[Symbol Shift and I] [Return]
+
+
+@{b}+3DOS@{ub}
+
+These are Spectrum +3 disk files.  I know of no emulator that can read them (although
+the format is similar to .ZXT so you may be able to load them into an emulator which supports that).
+
+
+@{b}GIF@{ub} GIF87a
+
+The generally-accepted standard for Web graphics (BOO!  Please join my campaign to popularise PNGs and crush GIFs into the ground.  Hurrah!).  Er.. where was I?  Oh yes, PDHFIC can create GIFs for people wanting to use Spectrum SCRs on their web pages, through use of the excellent SCR2GIF [ftp://ftp.void.jump.org/pub/sinclair/tools/amiga/scr2gif.lha].  If you want to use this feature, please drop SCR2GIF into the same drawer as PDHFIC.
+
+@endnode
+
+@node future "Future Plans"
+This is a list of things I might possibly add for the next release (in no
+particular order):
+
+
+Saving "into" TAPs (and possibly other tape formats) using the forthcoming,
+er, hold on... this might be top secret...
+
+
+Compressed ZX82 files
+
+
+Decompressing input files
+
+
+More presets for the favourite SENSE options (like the current GREYSCALE
+and NOBRIGHT switches).  If I can think of any.  ALLBRIGHT comes to mind.
+
+
+Presets in a menu on the GUI?
+
+
+Change the BRIGHT detection so it only considers the brightness of INK and
+PAPER, not every colour in the block.  (easy to add for OS3 version...)
+
+
+Dynamic Contrast for checking the brightness of the picture and selecting
+the correct level for BRIGHT to make everything look good.
+
+
+Modular system for savers (add extra output file formats with a few clicks of the mouse.  Or a text editor.  Or something.)
+
+
+Warn the user if no FLASH pixels were found, when FLASH is set
+
+
+Of course, if you have any other suggestions...
+@endnode
+
+@node thanks "Thanks To..."
+People who deserve a mention include;
+
+
+Blood for his BMP2SPEC program, which gave me the inspiration to create this
+
+
+Leszek Chmielewski (LCD) for giving me loads of information about the dithering routine he wrote for BMP2SCR.  Check out BMP2SCR at http://lcd-one.da.ru
+
+
+Duncan Snowden created part of the new style glowicon.
+
+
+Gerard Sweeney who was the only person who seemed vaguely interested in an
+Amiga-specific xxx2SCR type program.  Until I mentioned that I was going to
+write one anyway.  At which point everyone seemed interested.
+
+
+Simon Goodwin who made some suggestions and gave me the information required
+to implement the ZX82 format.
+
+
+Paul Hill for telling me about more bugs than anybody else...
+
+
+And, of course, all those lovely people on comp.sys.sinclair
+
+@endnode
+
+@node contact "Contact Information"
+This program was written in 1998-2001 by Chris Young and Joe Mackay
+
+(just in case you don't read the text on the contents page)
+
+
+As always, the best contact method is by e-mail, so that's...
+
+
+chris@unsatisfactorysoftware.co.uk (Chris Young)
+
+joe@nergles.cjb.net (Joe Mackay)
+
+
+If you have any suggestions, queries or anything then send it to me (Chris) and I'll listen and most probably reply as well.
+
+
+If you are having problems with specific datatypes, then send it to Joe as
+he wrote the original Datatypes handling code.  Hehe.
+
+
+Also check out the Unsatisfactory Software website at;
+
+http://www.unsatisfactorysoftware.co.uk/
+
+
+Note that if you want to directly access subdirectories (eg. the PDHFIC/ppmtoscr support area), then you @{b}MUST@{ub} include a trailing slash!  If you don't, then it won't work!
+
+
+Please check the PDHFIC pages for latest bug reports and other information.
+
+@endnode
+
+@node alg "Colour Mapping Algoritm"
+The colour mapping in PDHFIC has to take a couple of things into account:
+
+
+1. The Spectrum has a fixed palette consisting of 15 colours (inc BRIGHT)
+
+
+2. Each 8x8 block of pixels can only contain two colours out of eight.
+
+
+Basically, if you think the colour mapping in PDHFIC is crap, then you're
+probably right.  However, please read the following if you are having
+trouble getting something to look good;
+
+
+PDHFIC's "super" colour mapping takes the two MOST USED colours in each
+block and maps one to PAPER and the other to INK.  Then each 8x8 block is
+checked for pixels of a brightness above the BRIGHTSENSE level (see
+@{"tooltypes" link usage-wb}).  If over half are above this level, then the
+block will be given the BRIGHT attribute.
+
+
+It also incorporates a new "smooth" mode (enabled by default) - any pixels
+not mapping as INK or PAPER in a block will map to the closest colour.  This
+can remove excess pixels and give images a more, er, "smooth" look.  What it
+is actually designed to do, however, is make colour choices more accurate.
+If disabled with the NOSMOOTH switch/tooltype, any excess pixels will map to
+INK.  If you are getting cases of disappearing pixels, try setting NOSMOOTH.
+
+
+Pictures with a lot of shading, due to the limited palette on the Spectrum,
+will normally come up with large areas of the same colour. If this happens,
+then dither the picture down to two colours.  Convert it again, and add the
+colour back in afterwards.  The dithering should make it look a lot better. 
+However, brightly coloured digitised images can convert very well.
+
+
+Greyscale pictures, can look quite good without needing to be dithered.  In
+fact, colour images saved in GREYSCALE mode can also look quite good, and
+are worth trying if saving in colour mode didn't wield very good results. 
+Tweaking the WHITESENSE and BRIGHTSENSE options in GREYSCALE mode will
+change the contrast of the resulting image.
+
+
+Pictures with large areas of bold colour, and sharp contrast (such as
+cartoons) will convert about 6 millions times better than real life type
+images.  Try to avoid having a lot of different colours close to each other.
+
+
+If the picture you are trying to convert is quite dark, try reducing the
+values of BRIGHTSENSE and WHITESENSE.  If you are converting a bright
+picture, then decrease these values.  The BRIGHTSENSE option especially
+applies to greyscale pictures.
+
+
+If you often get colours being detected as greys, try reducing the
+COLOURSENSE value.
+
+
+Also lower COLOURSENSE (or the individual fine adjustments @{"REDYELLOW" link usgae-wb} etc
+options) if you are getting reds, greens and blues instead of cyans,
+magentas and yellows.  Raise it if the opposite is happening.
+
+
+To stop the BRIGHT attribute being used, set BRIGHTSENSE to an unearthly
+large value (such as 5000), or set the CLI switch "NOBRIGHT"
+
+
+To only convert pictures into greyscale, set COLOURSENSE to a large value
+(such as 5000), or set the CLI switch "GREYSCALE"
+
+
+To get totally monochrome images, set both BRIGHTSENSE and COLOURSENSE to
+5000, or specify both NOBRIGHT and GREYSCALE on the command line.
+
+
+Note: It is much easier to test these options using the
+@{"advanced options" link menu-advopts} part of the GUI.
+
+@endnode
+
+@node flash "Who in their right mind is actually going to use this feature?"
+PDHFIC includes the FLASH attribute.  How it decides what to flash is quite
+simple, but you have to be quite careful when trying to use it.
+
+
+The FLASHxxx tooltypes/arguments tell PDHFIC which blocks to flash.  When
+it comes across the colour you specify, the block that colour is in will be
+given the FLASH attribute.
+
+
+@{b}Warning:@{ub} Scaling may make the FLASH colour disappear completely!  I
+recommend turning off scaling when using FLASH mode.
+
+
+To specify the colour to symbolise a FLASH, use the FLASH tooltypes or
+arguments as follows;
+
+
+          tooltype                    command line arguments
+
+
+FLASHRED=<value from 0 to 255>    FLASHRED <value>   or RED <value>
+
+FLASHGRN=<value from 0 to 255>    FLASHGREEN <value> or GRN <value>
+
+FLASHBLU=<value from 0 to 255>    FLASHBLUE <value>  or BLU <value>
+
+
+You @{b}must@{ub} specify all three for it to work, and using black (RED=0,
+GRN=0 and BLU=0) probably won't work.
+
+
+This should describe the @{b}exact@{ub} colour component (in decimal) of the
+colour you want to trigger a FLASH.  This is the colour on the ORIGINAL
+PICTURE, not the SCR!
+
+
+You can also use the GUI's @{"advanced options" link menu-advopts} - if
+possible, PDHFIC will show you which colour will flash.
+
+
+The way I advise you to use this is to set a colour aside for use with
+FLASH, and assign it a colour close to the one where it is going to be used.
+That way, PDHFIC won't pick up one pixel of a completely different colour
+(and therefore possibly mess up the colour mapping)
+
+
+I'd be very interested if anybody actually puts FLASH to good use - let me
+know if you use this feature!
+
+
+(Perhaps some people might like to use it to create crap "animated" SCRs..?)
+
+
+Oh, one more thing - for obvious(?) reasons, the ZX Datatype doesn't
+implement the FLASH attribute.  And the non-AGA versions of ZXAM also can't
+display it.
+
+@endnode
+
+@node examples "Example SCRs"
+The example SCRs are as follows;
+
+
+@{"mansell.scr" link examples/mansell.scr/main} (PPMtoSCR v2.0;smooth)
+
+Here we have ol' Nige demonstrating how good colourful digitised images can
+look on the Speccy.  Not bad.
+
+
+@{"gromit.scr" link examples/gromit.scr/main} (PPMtoSCR v1.0)
+
+This was a colour image, but has been dithered down to two colours before
+conversion.  This is similar (if not identical) to the output you would get
+from BMP2SPEC.  It looks good, but would look even better when/if re-coloured.
+
+
+@{"cartoon.scr" link examples/cartoon.scr/main} (PDHFIC v2.0;smooth)
+
+After a lot of fiddling with PDHFIC's @{"advanced options" link usage-gui},
+I managed to get this out of it.  Pretty darn close to the original, I'd
+say.
+
+
+@{"scifi.scr" link examples/scifi.scr/main} (PDHFIC v3.0;ordered dither)
+
+This is generated from an image included with dithering information LCD sent me.
+I was using it to compare between my dithering and LCDs.  They are fairly close.
+
+
+@{b}The Windows Logo@{ub}
+
+Spookily, this converted very well, but I'm scared of MS and therefore
+unable to distribute it.
+
+
+@{b}More@{ub}
+
+Yes, folks.  There's lots more examples on the Unsatisfactory Software web
+pages...
+
+@endnode
+
+@node history "Program History"
+PPMtoSCR history removed!  If you want to read about the forerunner to
+PDHFIC, then consult the ppmtoscr archive.
+
+
+Releases with letters appended to the version number are BETA and should be replaced with the full version as soon as possible.
+
+
+Version 3.3 (11.10.2009)
+
+-----------
+
+* Fixed crash on exit
+
+* Fixed some potential string corruption (thanks to Matthias Rustler)
+
+* Compiled for AROS x86/PowerPC only.
+
+
+
+Version 3.2 AROS BETA (04.10.2009)
+
+-----------
+
+* Minor changes for AROS compilation.  Very unstable.
+ASL filter hook removed again (for AROS only)
+
+
+* Compiled for AROS x86 only.
+
+
+
+Version 3.2 (12.11.2008)
+
+-----------
+
+* Re-added ARexx and ASL filter hook.
+
+
+
+Version 3.1 (19.07.2008)
+
+-----------
+
+* OS4 NATIVE VERSION made possible by PortablE.  There is no 68k compile of this release.
+
+* Changed the Datatypes loading code to be 24-bit - this gives cleaner images as 24-bit images will no longer be dithered down to 256 colours.
+
+* extscale no longer required, scaling now being done by picture.datatype
+
+* Fixed the Use Screen menu item
+
+* Fixed errors that display when converting the clipboard contents.
+
+* Fixed a bug which caused a crash when the Display... menu items were picked.
+
+* Updated all email addresses etc.
+
+* Removed ARexx port (hopefully temporary, due to lack of ARexx module for PortablE)
+
+* Removed intelligent filtering (as yet unknown problem causing ASL to crash)
+
+* Minor problem still remaining: display of values on the Information requester are wrong.
+
+
+
+Version 3.0 (12.05.2001)
+
+-----------
+
+@{b}NB: There is a OS4 native "v3.0".  If you have this it will show an output window
+on startup.  This OS4 version is a BETA, please upgrade.@{ub}
+
+
+* Addition:  New dithering routine (Thanks to Leszek)
+
+* Addition:  +3DOS output format
+
+* Updated:   Icons now contain an OS3.5 glowicon part
+
+* Removal:   Removed that annoying quit requester
+
+* Bug fixed: PDHFIC now works after cancelling the "overwrite?" requester
+
+* Bug fixed: BRIGHT attributes were being transferred between pics
+
+* Bug fixed: Saving the configuration will no longer crash the Amiga
+
+
+Version 2.8 (04.08.99)
+
+-----------
+
+
+* Predictably managed to break the colour attributes writing code when adding
+  the black/white routine in.  fixed.
+
+* Fixed the progress window's overly-font-sensitive problem.
+
+
+Version 2.7 (01.08.99)
+
+-----------
+
+Finally, a proper update!
+
+
+* Added "attributes" option to enable creation of pictures without the
+  colour attributes
+
+* Changed the mapping so that the lightest colour is PAPER, and the darkest
+  one is INK, instead of the most popular being PAPER.  This looks better
+  while loading, and also when saving with no attributes.
+
+* Added "QUIT" command to ARexx interface.
+
+
+Version 2.6 (10.03.99)
+
+-----------
+
+Fixed a completely stupid bug in the ROM Remapping routine which should
+never have happened.
+
+
+Version 2.5 (26.12.98)
+
+-----------
+
+Just minor fixes, I think.  I can't really remember.  This version has been
+sitting around on my HD for a while, and I thought I may as release it.
+
+
+Version 2.4 (31.10.98)
+
+-----------
+
+* PDHFIC will now warn you if extscale is not available
+
+* The information requester will now tell you how many FLASH pixels were found.
+
+* Will transparently use SCR2GIF to create Spectrum screens in GIF format (if such a thing is possible!)
+
+* Snapshot window option
+
+
+Version 2.3 (03.10.98)
+
+-----------
+
+* v2.1 crashed on startup if the user didn't have a free pen.  Fixed.
+
+* Added an option to disable the "Intelligent Filtering", as this seemed to be causing a problem on some systems.
+
+* Fixed the Installer script: it now adds the PPaint config line for SaveSCR at the END
+
+* The TZX saver now has an option to change the border colour of custom block SCREEN$.  In addition, the description in custom blocks now contains the annotation text from the original file (if available).  It also now generates TZX files of v1.12
+
+* Can switch off the progress window if it annoys you.
+
+* When smoothing mode is off, you can now select whether you want all the odd pixels mapped to INK or PAPER.
+
+* Will now automatically decide on an output filename, and you can even just
+select a directory with no filename (this may have caused problems in
+previous releases)
+
+* Changed "warn overwrite" so it warns before writing the file, rather than
+when selecting it.
+
+* Fixed a bug with calling extscale and using relative directories.
+
+* Fixed every known Enforcer hit in the program (including a few that I didn't know about)
+
+
+Version 2.2 (02.10.98)
+
+-----------
+
+
+Internal testing only - not for general release.
+
+
+Version 2.1 (27.09.98)
+
+-----------
+
+
+* Oops - v2.0 wasn't creating valid SCRs!  Fixed.
+
+* Added "Write .header" option to enable/disable writing of .headers with
+.bytes files.
+
+* Fixed the SaveSCR.pprx script
+
+
+Version 2.0 (20.09.98)
+
+-----------
+
+
+* Made PDHFIC's GUI into an AppWindow
+
+* The GUI is now font sensitive
+
+* Added lots of extra options to the GUI, including a new Advanced Options
+section
+
+* Added an ARexx port
+
+* Can now load files from the system clipboard
+
+* Re-added the PPM support in (sort of) - PDHFIC can now load PPM P6 files, if
+they are exactly 256x192 pixels in size.
+
+* There is now a filter on the input file requester, which will only show up
+valid Datatypes images and PPMs of the correct size.  It took me ages to
+work out how to do that, so you'd better appreciate it.  Right?
+
+* Added TZX support, with a new TZX Blocks menu
+
+* New Display options for viewing "before and after" pictures
+
+* More information in the info requester.
+
+* Fixed the bug causing Enforcer hits on the CLI interface, and also causing
+strange things to appear on the Speccy's filename.
+
+* Scaling now works from the CLI interface.
+
+
+Can anybody tell I've just had a week off work, with nothing better to do
+than run through a list of the Amiga's ROM functions, implementing each and
+every one of them into PDHFIC?  If someone can cure me from this sadness,
+please do...
+
+
+Version 1.0 (28.08.98)
+
+-----------
+
+
+First release.
+
+Enhancements from PPMtoSCR 2.1 include;
+
+ Directly supports Datatypes
+
+ Small GUI
+
+ More colour mapping adjustments
+
+ Alternative OS3 palette to use
+
+@endnode
+
+@node bugs "Known Bugs (most important first)"
+Sometimes BRIGHT does not work when using the ROM Remap routine.  There seems to be no
+particular pattern to when it works and when it doesn't.
+
+
+If you are using OS3.5 or higher, saving the configuration from PDHFIC causes
+the "Start From" option to change to "Shell".  To correct this, select the PDHFIC icon,
+choose "Information" from the "Icons" menu, and change "Start From" back to "Workbench".
+
+
+If you run any ASL patching utility (RTPatch, ReqChange etc), then you
+might experience problems with the source file requester.  If this happens,
+@{b}DISABLE INTELLIGENT FILTERING@{ub}.  Sorry, but it's some kind of weird
+side-effect of my ASL filter.  Can't you lot just use the (unofficial?)
+asl.library v42 on Aminet?  That should work.
+
+
+Due to the way PDHFIC does colour mapping, random dithering may occasionally
+cause blocks to appear in apparently the wrong colour(s) if "Remap after dither"
+is enabled.  Run it through again and it may be ok, otherwise try deselecting Remap
+After Dither.  Fixing this requires a rewrite of some of my old code - something
+which needs doing, but is difficult as I can't understand most of it anymore.
+
+
+Sometimes when quitting PDHFIC, the window either doesn't close or the Miggy
+GURUs.  Er... if this happens to you, can you send me a quick email
+describing the steps leading up to it, the current settings etc.  Thanks.
+
+(I haven't seen this one while working on it recently, so it may have
+been a bug in OS3.0 which has been fixed)
+ 
+
+Rather annoyingly, the BRIGHTSENSE slider on the GUI doesn't seem to be
+working properly (or at all, even).
+
+(I have fixed a bug in the BRIGHT routine which may have been related to this)
+
+
+Currently when scaling more than one pic from the GUI, PDHFIC will call the
+program "extscale".  This is just a temporary workaround until I find out
+what causes the problem.  If you want to, you can make your Amiga crash by
+enabling the tooltype "TESTMODE" and then scaling more than one pic.
+
+
+The "Use Screen" menu option shows that the option is off when starting
+PDHFIC, even if it isn't.
+
+
+With OS3.5+, the pointer freezes while loading the picture into memory.
+
+@endnode
+
+@node OS3 "The OS3 ROMREMAPping"
+ROMREMAP attempts to map pictures to the closest colours in the Spectrum's
+palette (choice of the ZX Datatype's colour palette or a different one)
+
+
+This tends to give better results than my routine.  Note that it prefers pictures to be heavily increased in colour and contrast (use PPaint's Colour Adjust requester)
+
+
+If you want to convert SCRs into TAPs or whatever, then the ROMREMAP does
+a better job than the original... (just make sure you aren't using
+ALTPALETTE)
+
+
+@{b}Limitations@{ub}
+
+
+All colour mapping adjustment features are not implemented.  eg. GREYSCALE
+NOBRIGHT, COLOURSENSE, BRIGHTSENSE, WHITESENSE, REDYELLOW etc will do nothing.
+
+
+It is slower than the original
+
+@endnode
+
+@node compo "The Competition Results"
+I recently ran a small (sort of) competition on my website, where I asked
+people to think of a name for this program.
+
+
+Response?  No official entries (unless you count the one I sent to myself to
+check the form was working)
+
+
+My site has had a couple of hundred hits in the last month, where the compo
+was clearly displayed.  OK, admittedly most of those people were probably
+quickly taken in by YSAC and, if not, probably recognised the name "Stuart N
+Hardy" and took a look at that instead.  Before remembering who he is and
+then quickly veering off on a sharp tangent to some other site.  But anyway.
+
+
+I can't believe you lot.  Out of (let's say) 200 hits on the index page, at
+least a tenth of those must have been on their way to the PPMtoSCR area.
+That's twenty people.  And not one of them could think of a name.  Oh well.
+
+
+So, it was back down to me.  DT2SCR was the obvious choice, and has been
+used even from before I thought about writing it.  With a lack of ideas,
+#?toSCR was a popular candidate, but could prove difficult in the field of
+CLI usage.  It had a longer cousin, featuring several different wildcards
+and some bad pattern-matching, but I've completely forgotten what it was
+exactly.  So, enter Gerard's poor-quality suggestion of "Supertest Loading
+Picture" (or something), which apparently equated to DT2SCR (? - don't ask me*)
+Not good.  Then there were my equally pathetic suggestions, including DaToS
+(Datatype To Spectrum or SCR or something - perhaps that should be DaToSoSoS???!)
+and TAFKAP (The Application Formerly Known As Ppmtoscr).  Er... yes.
+
+
+So, Joe Mackay comes to the rescue again.  With PDHFIC.  So... why not
+another competition?  The first person to correctly guess what it stands for
+wins, er, nothing.  As I explained last time: I can't afford to give out
+proper prizes.
+
+
+* Government Health Warning:  Knowing how that one
+worked will seriously damage your health.
+
+@endnode
+
+@node arexx "ARexx Port"
+PDHFIC has an ARexx port, which you can use to control most aspects of the
+program.  Theoretically, you could write a script to batch-convert images,
+or to save data from an image processor "through" PDHFIC to create SCRs.
+
+
+If you create any scripts for PDHFIC, please send them to me for inclusion
+in the next release.
+
+
+The port is called "PDHFIC", and here are the commands;
+
+
+@{"ALTPALETTE   " link arexx-altpalette}
+
+@{"BLUECYAN     " link arexx-bluecyan}
+
+@{"BRIGHTSENSE  " link arexx-brightsense}
+
+@{"COLOURSENSE  " link arexx-coloursense}
+
+@{"CONVERT      " link arexx-convert}
+
+@{"FLASHBLUE    " link arexx-flashblue}
+
+@{"FLASHGREEN   " link arexx-flashgreen}
+
+@{"FLASHRED     " link arexx-flashred}
+
+@{"GETALTPAL    " link arexx-getaltpal}
+
+@{"GETBLUCYN    " link arexx-getblucyn}
+
+@{"GETBRIGHT    " link arexx-getbright}
+
+@{"GETCOLOUR    " link arexx-getcolour}
+
+@{"GETDEST      " link arexx-getdest}
+
+@{"GETFLASHBLU  " link arexx-getflashblu}
+
+@{"GETFLASHGRN  " link arexx-getflashgrn}
+
+@{"GETFLASHRED  " link arexx-getflashred}
+
+@{"GETGRNMAG    " link arexx-getgrnmag}
+
+@{"GETREDYEL    " link arexx-getredyel}
+
+@{"GETROMREMAP  " link arexx-getromremap}
+
+@{"GETSAVEFORMAT" link arexx-getsaveformat}
+
+@{"GETSCALE     " link arexx-getscale}
+
+@{"GETSMOOTH    " link arexx-getsmooth}
+
+@{"GETSOURCE    " link arexx-getsource}
+
+@{"GETWHITE     " link arexx-getwhite}
+
+@{"GREENMAGENTA " link arexx-greenmagenta}
+
+@{"NOSCALE      " link arexx-noscale}
+
+@{"NOSMOOTH     " link arexx-nosmooth}
+
+@{"QUICKCONVERT " link arexx-quickconvert}
+
+@{"QUIT         " link arexx-quit}
+
+@{"REDYELLOW    " link arexx-redyellow}
+
+@{"ROMREMAP     " link arexx-romremap}
+
+@{"SAVEFORMAT   " link arexx-saveformat}
+
+@{"SCALE        " link arexx-scale}
+
+@{"SELECTDEST   " link arexx-selectdest}
+
+@{"SELECTSOURCE " link arexx-selectsource}
+
+@{"SMOOTH       " link arexx-smooth}
+
+@{"STDREMAP     " link arexx-stdremap}
+
+@{"VERSION      " link arexx-version}
+
+@{"WHITESENSE   " link arexx-whitesense}
+
+@{"ZXDTPALETTE  " link arexx-zxdtpalette}
+
+
+@{"Included scripts" link arexx-scripts}
+
+@endnode
+
+@node arexx-quit
+@{b}QUIT@{ub} (2.7)
+
+
+Silently quits PDHFIC.
+
+
+@{b}RESULT:@{ub} None
+
+
+@{b}RC:@{ub} None
+
+@endnode
+
+@node arexx-convert
+@{b}CONVERT@{ub}
+
+
+Will act as if the user clicked on "Convert!" - ie. it will convert the
+selected files using the current settings.
+
+
+@{b}RESULT:@{ub} None
+
+
+@{b}RC:@{ub} 0 - OK
+
+    1 - Convert not available (source or dest not selected)
+
+    2 - Error during conversion
+
+@endnode
+
+@node arexx-selectsource
+@{b}SELECTSOURCE@{ub} [filename]
+
+
+Displays a file requester for the user to select the source DT image.
+
+If the optional source filename is specified, then PDHFIC will set the
+source to that image, if possible.
+
+
+[2.3] If auto-naming is enabled, this will also set the destination to a
+sensible default.  Note: You cannot rely on this being enabled!  There is
+currently no way to check from ARexx whether it is or not.
+
+
+@{b}RESULT:@{ub} Complete path and filename of selected image.
+
+
+@{b}RC:@{ub} 0 - OK
+
+    1 - Error (No file selected or not valid image)
+
+
+
+@{b}NOTE:@{ub} If you supply the optional filename, you must write the
+command as follows;
+
+
+Method 1.
+
+
+ADDRESS PDHFIC 'SELECTSOURCE "RAM:mypic.iff"'
+
+
+Method 2.
+
+
+ADDRESS PDHFIC
+
+SELECTSOURCE '"RAM:mypic.iff"'
+
+@endnode
+
+@node arexx-selectdest
+@{b}SELECTDEST@{ub} [filename]
+
+
+Displays a file requester for the user to select the destination filename.
+
+If the optional filename is specified, then PDHFIC will set the
+destination to that file.
+
+
+@{b}RESULT:@{ub} Complete path and file selected.
+
+
+@{b}RC:@{ub} 0 - OK
+
+    1 - No file selected
+
+
+
+@{b}NOTE:@{ub} If you supply the optional filename, you must write the
+command as follows;
+
+
+Method 1.
+
+
+ADDRESS PDHFIC 'SELECTDEST "RAM:mypic.iff"'
+
+
+Method 2.
+
+
+ADDRESS PDHFIC
+
+SELECTDEST '"RAM:mypic.iff"'
+
+@endnode
+
+@node arexx-quickconvert
+@{b}QUICKCONVERT@{ub} <source> <dest>
+
+
+Will convert <source> to <dest> using current settings.
+
+
+@{b}RESULT:@{ub} None.
+
+
+@{b}RC:@{ub} 0 - OK
+
+    1 - Source file is not a valid image
+
+    2 - Error occured during conversion
+
+
+
+@{b}NOTE:@{ub} You must supply the filenames in quotes, which basically
+means you need two lots of quotes.  Er... like this, that is;
+
+
+Method 1.
+
+
+ADDRESS PDHFIC 'QUICKCONVERT "RAM:mypic.iff" "RAM:mypic.scr"'
+
+
+Method 2.
+
+
+ADDRESS PDHFIC
+
+QUICKCONVERT '"RAM:mypic.iff" "RAM:mypic.scr"'
+
+@endnode
+
+@node arexx-scale
+@{b}SCALE@{ub}
+
+
+Switches scaling mode ON
+
+@endnode
+
+@node arexx-noscale
+@{b}NOSCALE@{ub}
+
+
+Switches scaling mode OFF
+
+@endnode
+
+@node arexx-romremap
+@{b}ROMREMAP@{ub}
+
+
+Switches ROMREMAP mode ON
+
+@endnode
+
+@node arexx-stdremap
+@{b}STDREMAP@{ub}
+
+
+Switches ROMREMAP mode OFF
+
+@endnode
+
+@node arexx-altpalette
+@{b}ALTPALETTE@{ub}
+
+
+Switches to the alternative ROMREMAP palette
+
+@endnode
+
+@node arexx-zxdtpalette
+@{b}ZXDTPALETTE@{ub}
+
+
+Switches to use the ZXDT palette for ROMREMAPping
+
+@endnode
+
+@node arexx-smooth
+@{b}SMOOTH@{ub}
+
+
+Switches smooth mode ON
+
+@endnode
+
+@node arexx-nosmooth
+@{b}NOSMOOTH@{ub}
+
+
+Switches smooth mode OFF
+
+@endnode
+
+@node arexx-brightsense
+@{b}BRIGHTSENSE@{ub} <value>
+
+
+Changes to the new <value> for BRIGHTSENSE
+
+@endnode
+
+@node arexx-coloursense
+@{b}COLOURSENSE@{ub} <value>
+
+
+Changes to the new <value> for COLOURSENSE
+
+@endnode
+
+@node arexx-whitesense
+@{b}WHITESENSE@{ub} <value>
+
+
+Changes to the new <value> for WHITESENSE
+
+@endnode
+
+@node arexx-redyellow
+@{b}REDYELLOW@{ub} <value>
+
+
+Changes to the new <value> for REDYELLOW
+
+@endnode
+
+@node arexx-bluecyan
+@{b}BLUECYAN@{ub} <value>
+
+
+Changes to the new <value> for BLUECYAN
+
+@endnode
+
+@node arexx-greenmagenta
+@{b}GREENMAGENTA@{ub} <value>
+
+
+Changes to the new <value> for GREENMAGENTA
+
+@endnode
+
+@node arexx-flashred
+@{b}FLASHRED@{ub} <value>
+
+
+Changes to the new <value> for FLASHRED
+
+@endnode
+
+@node arexx-flashgreen
+@{b}FLASHGREEN@{ub} <value>
+
+
+Changes to the new <value> for FLASHGREEN
+
+@endnode
+
+@node arexx-flashblue
+@{b}FLASHBLUE@{ub} <value>
+
+
+Changes to the new <value> for FLASHBLUE
+
+@endnode
+
+@node arexx-version
+@{b}VERSION@{ub}
+
+
+Returns the version of PDHFIC that is running.
+
+You should check this value when using new ARexx commands which aren't
+implemented in older versions.
+
+@endnode
+
+@node arexx-saveformat
+@{b}SAVEFORMAT@{ub} <value>
+
+
+Changes the current @{"output format" link formats-output}.  <value> can be a number from 0-4, which
+represents;
+
+
+0 - SCR
+1 - ZX82
+2 - BYTES
+3 - TAP
+4 - TZX
+
+@endnode
+
+@node arexx-getsaveformat
+@{b}GETSAVEFORMAT@{ub}
+
+
+Returns the current output format (SCR, ZX82, BYTES, TAP or TZX)
+
+@endnode
+
+@node arexx-getsource
+@{b}GETSOURCE@{ub}
+
+
+Returns the current source path and filename
+
+@endnode
+
+@node arexx-getdest
+@{b}GETDEST@{ub}
+
+
+Returns the current output path and filename
+
+@endnode
+
+@node arexx-getbright
+@{b}GETBRIGHT@{ub}
+
+
+Returns the current BRIGHTSENSE level
+
+@endnode
+
+@node arexx-getcolour
+@{b}GETCOLOUR@{ub}
+
+
+Returns the current COLOURSENSE level
+
+@endnode
+
+@node arexx-getwhite
+@{b}GETWHITE@{ub}
+
+
+Returns the current WHITESENSE level
+
+@endnode
+
+@node arexx-getredyel
+@{b}GETREDYEL@{ub}
+
+
+Returns the current RED/YELLOW level
+
+@endnode
+
+@node arexx-getblucyn
+@{b}GETBLUCYN@{ub}
+
+
+Returns the current BLUE/CYAN level
+
+@endnode
+
+@node arexx-getgrnmag
+@{b}GETGRNMAG@{ub}
+
+
+Returns the current GREEN/MAGENTA level
+
+@endnode
+
+@node arexx-getflashred
+@{b}GETFLASHRED@{ub}
+
+
+Returns the current RED level for FLASH
+
+@endnode
+
+@node arexx-getflashgrn
+@{b}GETFLASHGRN@{ub}
+
+
+Returns the current GREEN level for FLASH
+
+@endnode
+
+@node arexx-getflashblu
+@{b}GETFLASHBLU@{ub}
+
+
+Returns the current BLUE level for FLASH
+
+@endnode
+
+@node arexx-getscale
+@{b}GETSCALE@{ub}
+
+
+RESULT: 0 - Scaling mode is OFF
+
+        1 - Scaling mode is ON
+
+@endnode
+
+@node arexx-getsmooth
+@{b}GETSMOOTH@{ub}
+
+
+RESULT: 0 - Smooth mode is OFF
+
+        1 - Smooth mode is ON
+
+@endnode
+
+@node arexx-getaltpal
+@{b}GETALTPAL@{ub}
+
+
+RESULT: 0 - Using ZX Datatype palette
+
+        1 - Using alternative palette
+
+@endnode
+
+@node arexx-getromremap
+@{b}GETROMREMAP@{ub}
+
+
+RESULT: 0 - Using standard colour mapping
+
+        1 - Using OS3's built in ROM routines
+
+@endnode
+
+@node arexx-scripts "The ARexx Scripts"
+@{b}LoadDT.zxam@{ub} - This is a script for the emulator ZXAM, which will
+allow you to load Datatypes images directly into the (emulated) Spectrum's
+screen memory.
+
+
+@{b}SaveSCR.pprx@{ub} - This is a script for Personal Paint, which should
+be installed into PPaint's macro section.  It allows you to save pictures
+from PPaint, and directly convert them into SCRs (or whatever).
+
+
+@{b}LoadDT.asprx@{ub} - This is a script for the emulator ASp, which will
+allow you to load Datatypes images directly into the emaultor's screen memory.
+Note that both PDHFIC and ASp must be running, and the script must be started
+from within ASp.
+
+@endnode
+
+@node faqs "Frequently Asked Questions (which I largely just made up)"
+@{b}Why/what/how the blimmin' 'eck...?@{ub}
+
+
+I'm sorry, but if you're going to talk like that then I won't help you.
+
+
+@{b}Are you really as nasty as you make out to be in this guide?@{ub}
+
+
+No.
+
+
+@{b}Er... so what the blimmin' eck...@{ub}
+
+
+Hey!
+
+
+@{b}I mean, what exactly does PDHFIC stand for then?@{ub}
+
+
+I'm not telling you.  Keep guessing.
+
+
+@{b}Why does the progress bar not work properly if I try to scale more than
+one pic?@{ub}
+
+
+It's because of my workaround for the bizarre bug in the scaling routine, which the greatest minds in the
+world can't actually track down.  Anyway, it happens to be Joe's fault as
+he wrote that bit of code.
+
+
+If you really want to, you can enable the TESTMODE tooltype.  This will
+force PDHFIC to always use the internal scaling routine, but be warned
+that the second scale you do will almost certainly crash the Amiga.  (if it
+doesn't, then let me know)
+
+
+@{b}So what causes this scaling bug, then?@{ub}
+
+
+I have no idea.  If I knew, then I would have fixed it.
+
+
+@{b}The input file requester doesn't actually work!  What can I do?@{ub}
+
+
+Enable the tooltype NOFILTER, or deselect the "Intelligent Filtering" option from the menu.  Alternatively, quit any ASL patchs you are running (reqchange reportedly crashes the system completely, and RTpatch causes illegal memory accesses).  This should make it work.
+
+@endnode
+
+@node cod "Did somebody mention fish?"
+PDHFIC 3 implements a new dithering routine.  I would explain the technical details of
+how it works, but I'm not entirely sure myself.  But it does work, and it gives great results!
+
+
+@{"Dithering Methods" link dithermethod}
+
+@endnode
+
+@node simplemap "Simplemap"
+The SimpleMap feature causes PDHFIC to use a very simple mapping routine instead of the usual one.  This picks up every single hint of colour on the picture, and as such is only useful for dithered pictures - particulary those that are generally dark.  It exists mainly for testing purposes, and does not function if dithering is disabled.
+
+@endnode
+
+@node dithermethod "Dithering Methods"
+@{b}Ordered@{ub}
+
+This dithers the picture in an orderly fashion.
+
+
+@{b}Random@{ub}
+
+This dithers the picture randomly.
+
+@endnode
+
+@node rad "Remap After Dither"
+This changes when the colours are decided on - before or after the dithering process.  It is generally best just to leave this on.
+
+@endnode
+
+@node recommended "Recommended Options"
+My recommended configuration for PDHFIC is as follows:
+
+
+Smooth:             On
+
+Scale:              On
+
+ROM Remap:          On
+
+Dither Method:      Ordered
+
+ZXDT Palette:       Off
+
+Dither Simplemap:   Off
+
+Remap After Dither: On
+
+
+The Dither option and Attributes can then be toggled on/off depending on your preference.
+
+
+The other configuration I recommend is same as above, except:
+
+
+Dither:       Off
+
+ZXDT Palette: On
+
+
+This will enable you to load previously converted pictures back into PDHFIC after you have made
+some adjustments using your paint package.
+ 
+@endnode
+
+@node useless "Useless Things"
+PDHFIC has been under development for quite some time now, and in this time it has developed some options which are not worth bothering with.  They were originally included for testing purposes, or maybe due to not having a better way of implementing the feature.  Here is a rundown of options I don't advise anybody to touch, either because they don't really do anything, or they mess things up...
+
+
+@{b}SMOOTH@{ub}
+
+This maps pixels to the closest available colour in that 8x8 block - either INK or PAPER.  Sounds useful, you might think.  Well, that's because it is.  In fact, it's so damn good that I can't think of a single reason why you'd want to switch it off.
+
+
+@{b}ROM REMAP@{ub}
+
+This uses the OS3.x routines to map pictures to the closest colours in a Spectrum palette.  It's slightly slower than when you switch it off, but try switching it off and see the results you get.  @{b}bleurgh!@{ub}.  Leave this on at all costs.
+
+
+@{b}DITHER SIMPLEMAP@{ub}
+
+Yes, I know I've only just put this in, but it deserves to be taken right back out again.  It can be useful, as it makes all the dithering pixels show up, resulting in smoother gradients.  However, in "real world" tests, it makes no difference to the resulting pic.
+
+
+@{b}REMAP AFTER DITHER@{ub}
+
+This was put in for testing purposes, as mapping before dithering seemed to bring up better results.  I then reversed back to the previous method, and realised that the colours were actually better when remapping after dithering.  This is another option that deserves to be stuck in the "on" position.
+
+@endnode

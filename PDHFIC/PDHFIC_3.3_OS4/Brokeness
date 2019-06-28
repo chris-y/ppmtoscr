@@ -1,0 +1,3 @@
+Not released due to bug:
+The name on the Spectrum side when saving as a TAP does not have the characters after the (first part of) the filename blanked out.
+The exe in this dir is non-broken post 3.2, but not actually 3.3.

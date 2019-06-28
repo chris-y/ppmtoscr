@@ -1,0 +1,45 @@
+/* $VER: LoadDT.asprx 1.0 */
+/* Based on LoadSCR.asprx 1.1 and LoadDT.zxam... */
+/* Load any Datatypes image into the ASp display RAM */
+/* Warning: Original data overwritten.       */
+/*          Running program may trash image  */
+
+OPTIONS RESULTS
+
+GETVERSION            /* ask which ASp version is running */
+IF result<760 THEN DO        /* minimum of V0.76 to use this script */
+    ADDRESS COMMAND 'requestchoice >nil: TITLE "LoadDT.asprx" BODY "Requires ASp V0.76 or newer!" GADGETS "OK"'
+    EXIT
+END
+
+if ~show(ports,'PDHFIC') then do
+    ADDRESS COMMAND 'requestchoice >nil: "LoadDT.asprx" "PDHFIC is not running!" "Oops."'
+    exit
+end
+
+ADDRESS PDHFIC 'SELECTSOURCE'
+
+if rc>0 then exit
+
+ADDRESS PDHFIC 'QUICKCONVERT "' || RESULT || '" "T:pdhfic.tmp"'
+
+filename='t:pdhfic.tmp'
+
+IF OPEN(SCRFILE,filename,READ) THEN DO        /* open the file */
+    IF SEEK(SCRFILE,0,END)==6912 THEN DO    /* check file length */
+        SEEK(SCRFILE,0,BEGIN)
+        filedata=READCH(SCRFILE,6912)    /* read it */
+        GETPAGE                /* which screen? */
+        p=RESULT
+        IF BITTST(D2C(p),3) THEN DO    /* bit 3= scr buf */
+            SETPAGE 7        /* force shadow page in */
+            WRITERAM 49152 filedata    /* write pic */
+            SETPAGE p        /* put paging back */
+        END
+        ELSE DO
+            WRITERAM 16384 filedata /*write pic in normal display */
+        END
+    END
+    CLOSE(SCRFILE)                /* tidy up behind us.. */
+END
+
