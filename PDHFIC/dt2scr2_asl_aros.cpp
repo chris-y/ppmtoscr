@@ -1468,7 +1468,7 @@ long strtobin(char* str, long size) {
 
 
 
-#include <aros/_timeval.h>
+#include <aros/types/timeval_s.h>
 
 /*** target/exec/initializers ***/
 /* $Id: initializers.h 18668 2003-07-19 02:59:06Z iaint $ */ 
@@ -1988,7 +1988,7 @@ void new_monitor()  {
 /*** target/dos/filesystem ***/
 /* $Id: filesystem.h 28392 2008-04-20 00:20:39Z neil $ */ 
 
-#include <dos/filesystem.h>
+#include <dos/filesystemids.h>
 
 /*** target/rexx/rexxcall ***/
 

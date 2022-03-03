@@ -1,0 +1,27 @@
+SRC := dt2scr2_asl_aros.cpp
+OBJ := $(SRC:.cpp=.o)
+DEP := $(OBJ:.o=.d)
+
+CFLAGS := -D__AROS__ -g -O0 -I/usr/include/axrt
+USER_LIBS := 
+LDFLAGS := -L/usr/lib/x86_64-linux-gnu/axrt -specs=/usr/lib/x86_64-linux-gnu/axrt.specs
+
+# axrt.ld needs to be added to list of objects passed to linker for proper section ordering
+# axrt.specs needs to be used for default libraries selection
+
+all: pdhfic_axrt
+
+pdhfic_axrt: $(OBJ) /usr/lib/x86_64-linux-gnu/axrt/axrt.ld
+	$(CC) -o $@ $^ $(LDFLAGS) $(USER_LIBS)
+
+%.o: %.cpp $(DEP)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+-include $(DEP)
+
+%.d: %.cpp
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:.d=.o) >$@
+
+.PHONY: clean
+clean:
+	rm -f $(OBJ) $(DEP) pdhfic_axrt
